@@ -1,0 +1,10 @@
+[
+	{"raceVenue":"Pietermaritzburg", "rootsandrainURL": "https://www.rootsandrain.com/race1999/", "roundNumber": "1", "Year": "2014", "Competition": "World Cup"},
+	{"raceVenue":"Cairns", "rootsandrainURL": "https://www.rootsandrain.com/race2000/", "roundNumber": "2", "Year": "2014", "Competition": "World Cup"},
+	{"raceVenue":"Fort William", "rootsandrainURL": "https://www.rootsandrain.com/race2001/", "roundNumber": "3", "Year": "2014", "Competition": "World Cup"},
+	{"raceVenue":"Leogang", "rootsandrainURL": "https://www.rootsandrain.com/race2002/", "roundNumber": "4", "Year": "2014", "Competition": "World Cup"},
+	{"raceVenue":"Mont Sainte-Anne", "rootsandrainURL": "https://www.rootsandrain.com/race2003/", "roundNumber": "5", "Year": "2014", "Competition": "World Cup"},
+	{"raceVenue":"Windham", "rootsandrainURL": "https://www.rootsandrain.com/race2004/", "roundNumber": "6", "Year": "2014", "Competition": "World Cup"},
+	{"raceVenue":"Meribel", "rootsandrainURL": "https://www.rootsandrain.com/race2005/", "roundNumber": "7", "Year": "2014", "Competition": "World Cup"},
+	{"raceVenue":"Hafjell", "rootsandrainURL": "https://www.rootsandrain.com/race2006/", "roundNumber": "", "Year": "2014", "Competition": "World Championships"}
+]
