@@ -15,14 +15,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "data/seasonData_processed.json",
-			"settings":
-			{
-				"buffer_size": 975633,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -88,6 +80,10 @@
 	},
 	"file_history":
 	[
+		"/Users/markshilton/Documents/code/lookatthestats/static_chart.html",
+		"/Users/markshilton/Documents/code/lookatthestats/data/seasonData_processed.json",
+		"/Users/markshilton/Dropbox/Code/lookatthestats2/js/template.js",
+		"/Users/markshilton/Dropbox/Code/lookatthestats2/lookatthestats.sublime-project",
 		"/Users/markshilton/Dropbox/Code/lookatthestats2/data/seasonData_processed.json",
 		"/Users/markshilton/Dropbox/Code/lookatthestats2/data/filterForChart.py",
 		"/Users/markshilton/Dropbox/Code/lookatthestats2/data/chartData.json",
@@ -152,35 +148,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "data/seasonData_processed.json",
-					"settings":
-					{
-						"buffer_size": 975633,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								975126,
-								975126
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 476259.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
