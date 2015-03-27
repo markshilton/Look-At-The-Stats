@@ -46,23 +46,34 @@ def processResults(df):
 
     for col in cols:
         df[col + 'Gap'] = df[col].apply(lambda x: (x - df[col].min())/np.timedelta64(1,'s'))
-        df[col + 'Rank'] = df[col].rank()
+        df[col + 'Rank'] = df[col].rank().astype(int)
         df[col] = df[col].apply(timedeltaToString)
+        df[col + 'Rank']
 
-    return df.to_dict(outtype='records')
+    return df
     
 with open('seasonData.json', 'r', encoding='utf-8') as jsonFile:
     seasonData = json.load(jsonFile)
+    seasonData_flat = []
 
     for race in range(0,len(seasonData)):
         for cat in range(0,2):
-            print('processing ' + str(seasonData[race]) + ' ' + str(seasonData[race]['results'][cat]['category']))
+            print('processing ' + str(seasonData[race]['venue']) + ' ' + str(seasonData[race]['results'][cat]['category']))
             df = pd.DataFrame.from_dict(seasonData[race]['results'][cat]['categoryResults'])
+            df = df.query("sector1 != '' & sector2 != '' & sector3 != ''")
             processedResults = processResults(df)
-            seasonData[race]['results'][cat]['categoryResults'] = processedResults
 
-with open('seasonData_processed.json', 'w', encoding='utf-8') as outfile:
-    json.dump(seasonData, outfile)
+            df['venue'] = seasonData[race]['venue']
+            df['year'] = seasonData[race]['year']
+            df['roundNumber'] = seasonData[race]['roundNumber']
+            df['competition'] = seasonData[race]['competition']
+            df['category'] = seasonData[race]['results'][cat]['category']
+                                    
+            for rec in df.to_dict(outtype='records'):
+                seasonData_flat.append(rec)
+
+with open('seasonData_flat.json', 'w', encoding='utf-8') as outfile:
+    json.dump(seasonData_flat, outfile)
 
 print('Processing complete!')
 

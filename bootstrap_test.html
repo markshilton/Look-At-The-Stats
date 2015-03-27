@@ -31,38 +31,45 @@
           <h1>Look at the stats!</h1>
 
           <div class="row">
-          
               <div class="col-md-6", id="sector1">
                   <h3>Sector 1</h3>
-                        <script type="text/javascript">
-                            racingDots({data: "data/chartData.json",
-                                      chart: "#sector1",
-                                      width: 480, 
-                                      listLength : 20,
-                                      dotSpacing  : 20,
-                                      svgPadding : 20,
-                                      labelPadding : 150,
-                                      dotRadius : 4});
-                        </script>
               </div>
 
               <div class="col-md-6", id="split1">
                   <h3>Split 1</h3>
-                        <script type="text/javascript">
-                            racingDots({data: "data/chartData.json",
-                                      chart: "#split1",
-                                      width: 480, 
-                                      listLength : 20,
-                                      dotSpacing  : 20,
-                                      svgPadding : 20,
-                                      labelPadding : 150,
-                                      dotRadius : 4})
-                        </script>
               </div>
           </div>
-        </div>
 
+          <div class="row">    
+              <div class="col-md-6", id="sector2">
+                  <h3>Sector 2</h3>
+              </div>
 
+              <div class="col-md-6", id="split2">
+                  <h3>Split 2</h3>
+              </div>
+          </div>
+
+          <div class="row">    
+              <div class="col-md-6", id="sector3">
+                  <h3>Sector 3</h3>
+              </div>
+
+              <div class="col-md-6", id="split3">
+                  <h3>Split 3</h3>
+              </div>
+          </div>
+      </div>
+
+      <script type="text/javascript">
+        racingDots({data: "data/seasonData_flat.json",
+                  width: 480, 
+                  listLength : 20,
+                  dotSpacing  : 20,
+                  svgPadding : 20,
+                  labelPadding : 150,
+                  dotRadius : 4});
+      </script>
 
       <script type="text/javascript" src="js/jquery-1.11.2.js"></script>
       <script src="js/bootstrap.min.js"></script>
