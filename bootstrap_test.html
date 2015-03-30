@@ -28,47 +28,70 @@
   <body>
       <div class="container">
           
-          <h1>Look at the stats!</h1>
+          <h1>All the stats from the 2014 World Cup in one place</h1>
+          <div class="row">
+            <p>The 2015 season is nearly upon us. To get you in the mood for the splits and stats again, here's a little tool that lets you explore the top 20 splits and sectors for every race of the 2014 season. Just choose a race and a category from the drop downs and geek out!</p>
+          </div>
 
           <div class="row">
-              <div class="col-md-6", id="sector1">
+            <select id="venues">
+              <option value="Pietermaritzburg">WC1: Pietermaritzburg</option>
+              <option value="Cairns">WC2: Cairns</option>
+              <option value="Fort William">WC3: Fort William</option>
+              <option value="Leogang">WC4: Leogang</option>
+              <option value="Mont Sainte-Anne">WC5: Mont Sainte-Anne</option>
+              <option value="Windham">WC6: Windham</option>
+              <option value="Meribel">WC7: Meribel</option>
+              <option value="Hafjell">WCh: Hafjell</option>
+            </select>
+
+            <select id="categories">
+              <option value="Men">Men</option>
+              <option value="Women">Women</option>
+            </select>            
+          </div>
+
+          <div class="row">
+              <div class="col-md-4", id="split1">
+                  <h3>Split 1</h3>
+              </div>
+
+              <div class="col-md-4", id="split2">
+                  <h3>Split 2</h3>
+              </div>
+
+              <div class="col-md-4", id="split3">
+                  <h3>Split 3</h3>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-4", id="sector1">
                   <h3>Sector 1</h3>
               </div>
 
-              <div class="col-md-6", id="split1">
-                  <h3>Split 1</h3>
-              </div>
-          </div>
-
-          <div class="row">    
-              <div class="col-md-6", id="sector2">
+              <div class="col-md-4", id="sector2">
                   <h3>Sector 2</h3>
               </div>
 
-              <div class="col-md-6", id="split2">
-                  <h3>Split 2</h3>
-              </div>
-          </div>
-
-          <div class="row">    
-              <div class="col-md-6", id="sector3">
+              <div class="col-md-4", id="sector3">
                   <h3>Sector 3</h3>
-              </div>
-
-              <div class="col-md-6", id="split3">
-                  <h3>Split 3</h3>
               </div>
           </div>
       </div>
 
       <script type="text/javascript">
-        racingDots({data: "data/seasonData_flat.json",
-                  width: 480, 
-                  listLength : 20,
+        var params = {data: "data/seasonData_flat.json",
+                  venue: "Meribel",
+                  category: "Men",
+                  width: 320, 
+                  listLength : 10,
                   dotSpacing  : 20,
                   svgPadding : 20,
                   labelPadding : 150,
-                  dotRadius : 4});
+                  dotRadius : 4};
+
+        initCharts(params);
       </script>
 
       <script type="text/javascript" src="js/jquery-1.11.2.js"></script>
