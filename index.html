@@ -33,8 +33,8 @@
             <p>The 2015 season is nearly upon us. To get you in the mood for the splits and stats again, here's a little tool that lets you explore the top 20 splits and sectors for every race of the 2014 season. Just choose a race and a category from the drop downs and geek out!</p>
           </div>
 
-          <div class="row">
-            <select id="venues">
+          <form class="form-inline">
+            <select class="form-control", id="venues">
               <option value="Pietermaritzburg">WC1: Pietermaritzburg</option>
               <option value="Cairns">WC2: Cairns</option>
               <option value="Fort William">WC3: Fort William</option>
@@ -45,11 +45,11 @@
               <option value="Hafjell">WCh: Hafjell</option>
             </select>
 
-            <select id="categories">
+            <select class="form-control", id="categories">
               <option value="Men">Men</option>
               <option value="Women">Women</option>
             </select>            
-          </div>
+          </form>
 
           <div class="row">
               <div class="col-md-4", id="split1">
@@ -82,8 +82,6 @@
 
       <script type="text/javascript">
         var params = {data: "data/seasonData_flat.json",
-                  venue: "Meribel",
-                  category: "Men",
                   width: 320, 
                   listLength : 10,
                   dotSpacing  : 20,

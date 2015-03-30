@@ -1,6 +1,7 @@
-var Charting = (function() {
+(function() {
 
-    var collection, results, raceSets, maxAxis, chartData, svg, sector, height, width
+    var collection, results, raceSets, sector, sectors, maxAxis, chartData, svg, height, width
+
     sectors = ['split1', 'split2', 'split3', 'sector1', 'sector2', 'sector3'];
 
     buildPourOverCollection = function (params, data){        
@@ -20,8 +21,8 @@ var Charting = (function() {
         collection.addFilters([venues, categories, split1Rank, split2Rank, split3Rank, sector1Rank, sector2Rank, sector3Rank])
 
         //Create initial query sets
-        collection.filters.venue.query(params.venue);
-        collection.filters.category.query(params.category);
+        collection.filters.venue.query(document.getElementById("venues").value);
+        collection.filters.category.query(document.getElementById("categories").value);
         collection.filters.split1Rank.query([1,params.listLength]);
         collection.filters.split2Rank.query([1,params.listLength]);
         collection.filters.split3Rank.query([1,params.listLength]);
@@ -64,7 +65,7 @@ var Charting = (function() {
         }
     
     //Draw the chart
-    drawChart = function(params){
+    drawInitChart = function(params){
 
         var gap = sector + "Gap",
         rank = sector + "Rank";
@@ -79,78 +80,147 @@ var Charting = (function() {
                 .scale(xScale)
                 .orient("bottom")
                 .ticks(5)
-                .tickSize(  params.height, 0, 0)
+                .tickSize(-height, 0, 0)
 
-        //Draw the data points  
+        //Draw the data points
+        //DATA JOIN: Join current data with existing elements (if any)
         var circles = svg.selectAll("circle")
-                .data(chartData);
-
-        //Update old elements as required
-        circles.attr("class", "update")
-                .enter()
-                .append("circle")
-                .attr("cx", maxAxis)
-                .transition().attr("cx", function(d){return xScale(d[gap]);}).duration(1000).delay(500)
-                .attr("cy", function(d, i){return (i * params.dotSpacing) + (params.dotSpacing/2);})
-                .attr("r", params.dotRadius + "px")
-                .attr("fill", "#2B8CBE")
+                          .data(chartData)
+                          .enter()
+                          .append("circle")
+                          .attr("cx", maxAxis)
+                          .transition().attr("cx", function(d){return xScale(d[gap]);}).duration(1000).delay(500)
+                          .attr("cy", function(d, i){return (i * params.dotSpacing) + (params.dotSpacing/2);})
+                          .attr("r", params.dotRadius + "px")
+                          .attr("fill", "#2B8CBE")
 
         //Label the data  points
         var labels = svg.selectAll("text")
-                .data(chartData)
-                .enter()
-                .append("text")
-                .text(function(d){
-                  if(d[rank] == 1){return d['name'] + ": " + d[sector];}
-                  else {return d['name'] + ": +" + d[gap];}
-                  })
-                .attr("x", function(d){return xScale(d[gap]) - 7;})
-                .attr("y", function(d, i){return (i * params.dotSpacing) + ((params.dotSpacing/2) + (params.dotRadius/2));})
-                .attr("text-anchor", "end")
-                .attr("font-family", "sans-serif")
-                .attr("font-size", "10px")
-                .attr("opacity", 0).transition().attr("opacity", 1).duration(400).delay(1300);
+                        .data(chartData)
+                        .enter()
+                        .append("text")
+                        .text(function(d){
+                                if(d[rank] == 1){return d['name'] + ": " + d[sector];}
+                                else {return d['name'] + ": +" + d[gap];}
+                                })
+                        .attr("x", function(d){return xScale(d[gap]) - 7;})
+                        .attr("y", function(d, i){return (i * params.dotSpacing) + ((params.dotSpacing/2) + (params.dotRadius/2));})
+                        .attr("text-anchor", "end")
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "10px")
+                        .attr("opacity", 0).transition().attr("opacity", 1).duration(300).delay(1300);
 
-        //Draw the X-axis
+       //Draw the X-axis
         var drawXAxis = svg.append("g")
                   .attr("class", "axis")
                   .attr("transform", "translate(0, " + (params.listLength * params.dotSpacing) + ")")
                   .call(xAxis)
-                  .attr("text-anchor", "end")
-                  .attr("font-family", "sans-serif")
-                  .attr("font-size", "10px");
+    }
+
+    //Draw the chart
+    drawUpdateChart = function(params){
+
+        var gap = sector + "Gap",
+        rank = sector + "Rank";
+
+        //Set scale for data display      
+        var xScale = d3.scale.linear()
+                .domain([0, maxAxis])
+                .range([params.width - params.svgPadding, params.labelPadding + params.svgPadding]); 
+
+        //Define the x-axis
+        var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient("bottom")
+                .ticks(5)
+                .tickSize(-height, 0, 0)
+
+        //Draw the data points
+        //DATA JOIN: Join current data with existing elements (if any)
+        var circles = svg.selectAll("circle").data(chartData);
+        circles.attr("class", "update");
+        circles.enter().append("circle");
+        circles.transition().attr("cx", function(d){return xScale(d[gap]);}).duration(1000).delay(500)
+                .attr("cy", function(d, i){return (i * params.dotSpacing) + (params.dotSpacing/2);})
+                .attr("r", params.dotRadius + "px")
+                .attr("fill", "#2B8CBE")
+        circles.exit().remove()
+
+        //Label the data  points
+        var labels = svg.selectAll("text").data(chartData);
+        labels.attr("class", "update");
+        labels.enter().append("text");
+        labels.text(function(d){
+                  if(d[rank] == 1){return d['name'] + ": " + d[sector];}
+                  else {return d['name'] + ": +" + d[gap];}
+                  })
+              .attr("x", function(d){return xScale(d[gap]) - 7;})
+              .attr("y", function(d, i){return (i * params.dotSpacing) + ((params.dotSpacing/2) + (params.dotRadius/2));})
+              .attr("text-anchor", "end")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", "10px")
+              .attr("opacity", 0).transition().attr("opacity", 1).duration(300).delay(1300);
+        labels.exit().remove();
+
+       //Draw the X-axis
+        var drawXAxis = svg.select("g")
+                  .attr("class", "axis")
+                  .attr("transform", "translate(0, " + (params.listLength * params.dotSpacing) + ")")
+                  .transition().duration(500).call(xAxis);
+
+
     }
 
     //Helper function to loop through all six charts that need to be drawn/refreshed
     updateCharts = function(params){
-          for(i=0; i < sectors.length; i++){
+      for(i=0; i < sectors.length; i++){
             sector = sectors[i]
-            drawChart(params)
+            var split3Data = getChartData(params.collection, raceSets['split3Set'], 'split3Rank');
+            maxAxis = d3.max(split3Data, function(d){return d['split3Gap'];});
+            chartData = getChartData(params.collection, raceSets[sector + "Set"], sector + "Rank")
+            svg = d3.select("#" + sector + "_chart")
+            drawUpdateChart(params)
           }
+    }
 
-        }
-
-    //Do the inital data load, create PourOver collection and draw the charts
-    initCharts = function(params){ 
+    //Do the inital data load, create PourOver params.collection and draw the charts
+    initCharts = function(params){
         d3.json((params.data) + (params.refresh ? ("#" + Math.random()) : ""), function(error, json) {
-          collection = buildPourOverCollection(params, json)
+          params.collection = buildPourOverCollection(params, json)
           for (i = 0; i < sectors.length; i++){
                 sector = sectors[i]
-                var split3Data = getChartData(collection, raceSets['split3Set'], 'split3Rank');
+                var split3Data = getChartData(params.collection, raceSets['split3Set'], 'split3Rank');
                 maxAxis = d3.max(split3Data, function(d){return d['split3Gap'];});
-                chartData = getChartData(collection, raceSets[sectors[i] + "Set"], sectors[i] + "Rank")
+                chartData = getChartData(params.collection, raceSets[sectors[i] + "Set"], sectors[i] + "Rank")
 
                 height = params.dotSpacing * params.listLength + (2 * params.svgPadding),
                 width = params.width;
                 svg = d3.select('#' + sector)
                             .append("svg")
+                            .attr("id", sector + "_chart")
                             .attr("height", height)
                             .attr("width", width);
                 
-                drawChart(params)
-            }          
+                drawInitChart(params)
+            }
+
+          d3.select('#venues')
+            .on('change', function() {
+                var newVenue = d3.select('#venues').node().value;
+                params.collection.filters.venue.query(newVenue);
+                updateCharts(params)
+            });
+
+          d3.select('#categories')
+            .on('change', function() {
+                var newCategory = d3.select('#categories').node().value;
+                params.collection.filters.category.query(newCategory);
+                updateCharts(params)
+            });          
         })
-        }
+      }
+
+
 
   }
 )();
