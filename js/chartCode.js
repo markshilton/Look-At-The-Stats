@@ -82,9 +82,17 @@
                 .ticks(5)
                 .tickSize(-height, 0, 0)
 
+       //Draw the X-axis
+        var xAxisGroup = svg.append("g")
+                  .attr("class", "axis")
+                  .attr("transform", "translate(0, " + (params.listLength * params.dotSpacing) + ")")
+                  .call(xAxis)
+
+        var dots = svg.append("g")
+                              .attr("class", "dots");
         //Draw the data points
         //DATA JOIN: Join current data with existing elements (if any)
-        var circles = svg.selectAll("circle")
+        var circles = dots.selectAll("circle")
                           .data(chartData)
                           .enter()
                           .append("circle")
@@ -95,7 +103,7 @@
                           .attr("fill", "#2B8CBE")
 
         //Label the data  points
-        var labels = svg.selectAll("text")
+        var labels = dots.selectAll("text")
                         .data(chartData)
                         .enter()
                         .append("text")
@@ -109,12 +117,6 @@
                         .attr("font-family", "sans-serif")
                         .attr("font-size", "10px")
                         .attr("opacity", 0).transition().attr("opacity", 1).duration(300).delay(1300);
-
-       //Draw the X-axis
-        var drawXAxis = svg.append("g")
-                  .attr("class", "axis")
-                  .attr("transform", "translate(0, " + (params.listLength * params.dotSpacing) + ")")
-                  .call(xAxis)
     }
 
     //Draw the chart
@@ -135,9 +137,17 @@
                 .ticks(5)
                 .tickSize(-height, 0, 0)
 
+       //Draw the X-axis
+        var xAxisGroup = svg.select("g")
+                  .attr("class", "axis")
+                  .attr("transform", "translate(0, " + (params.listLength * params.dotSpacing) + ")")
+                  .transition().duration(500).call(xAxis);
+
+
+        dots = svg.selectAll(".dots");
         //Draw the data points
         //DATA JOIN: Join current data with existing elements (if any)
-        var circles = svg.selectAll("circle").data(chartData);
+        var circles = dots.selectAll("circle").data(chartData);
         circles.attr("class", "update");
         circles.enter().append("circle");
         circles.transition().attr("cx", function(d){return xScale(d[gap]);}).duration(1000).delay(500)
@@ -147,9 +157,9 @@
         circles.exit().remove()
 
         //Label the data  points
-        var labels = svg.selectAll("text").data(chartData);
+        var labels = dots.selectAll("text").data(chartData);
         labels.attr("class", "update");
-        labels.enter().append("text");
+        labels.enter().append("text_labels");
         labels.text(function(d){
                   if(d[rank] == 1){return d['name'] + ": " + d[sector];}
                   else {return d['name'] + ": +" + d[gap];}
@@ -161,13 +171,6 @@
               .attr("font-size", "10px")
               .attr("opacity", 0).transition().attr("opacity", 1).duration(300).delay(1300);
         labels.exit().remove();
-
-       //Draw the X-axis
-        var drawXAxis = svg.select("g")
-                  .attr("class", "axis")
-                  .attr("transform", "translate(0, " + (params.listLength * params.dotSpacing) + ")")
-                  .transition().duration(500).call(xAxis);
-
 
     }
 
